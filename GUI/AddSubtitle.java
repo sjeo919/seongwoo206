@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -30,16 +28,8 @@ public class AddSubtitle extends JFrame {
 	private JButton _start = new JButton("Export");
 	private JButton _cancel = new JButton("Cancel");
 
-	private String _fName;
-	private String _subName;
-	private String _outName;
-
 	public AddSubtitle() {
 		CreateAndShowGUI();
-
-		_fName = _fNameField.getText();
-		_subName = _subNameField.getText();
-		_outName = _outNameField.getText();
 
 		_browseVid.addActionListener(new ActionListener() {
 
@@ -115,6 +105,7 @@ public class AddSubtitle extends JFrame {
 
 	}
 
+	//this method constructs the GUI component of the AddSubtitle window
 	private void CreateAndShowGUI() {
 		setTitle("Export Video");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

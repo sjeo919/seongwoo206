@@ -1,4 +1,3 @@
-Run VamixWindow.java to start this application
 _____________________________________________________________________
 
 		DOWNLOAD
@@ -23,7 +22,7 @@ To play a media file from the media player, the "Play" button must
  be pressed which opens up a file chooser window. Navigate to the
  directory of the file and press "Open". If the file is not a valid
  media type, an error message will be shown. This media player
- supports ".mp4", ".mp3", ".aac", ".mov", ".avi" files.
+ supports ".mp4", ".mp3", ".aac", ".mov", ".avi", ".mkv" files.
  
 
 ______________________________________________________________________
