@@ -29,6 +29,7 @@ public class FullScreen {
 
 	public FullScreen(String mrl, EmbeddedMediaPlayer _mediaPlayer) {
 		
+		//use a canvas to contain the full screen media player
 		final JFrame frame = new JFrame();
 		Canvas canv = new Canvas();
 		_time = _mediaPlayer.getTime();
@@ -43,6 +44,7 @@ public class FullScreen {
 		frame.setSize(800, 600);
 		frame.setVisible(true);
 		
+		//declare embedded media player component
 		MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
 		final EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(frame));
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canv));
@@ -50,26 +52,30 @@ public class FullScreen {
 		mediaPlayer.setFullScreen(true);
 		mediaPlayer.playMedia(mrl);
 
+		//if media was already playing, set the full screen media time
 		if (_time > 0) {
 			mediaPlayer.setTime(_time);
 		}
 		
+		//pause the original screen before opening the full screen
 		_mediaPlayer.pause();
 		_mp = _mediaPlayer;
 		
 		mediaPlayer.setRepeat(true);
-		frame.setBounds(0, 0, (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-		frame.setLocation(0, 0);
+		
+		//the full screen listens to the hot keys
 		frame.addKeyListener(new KeyAdapter() {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int code = e.getKeyCode();
+				//if esc is pressed, pause the video, take the time and set the original media's time
 				if (code == KeyEvent.VK_ESCAPE) {
 					mediaPlayer.pause();
 					_mp.play();
 					_mp.setTime(mediaPlayer.getTime());
 					frame.dispose();
+					//pause when space is pressed
 				} else if(code == KeyEvent.VK_SPACE) {
 					if (mediaPlayer.isPlaying()) {
 						mediaPlayer.pause();
