@@ -14,6 +14,14 @@ import javax.swing.JButton;
 
 import Worker.GIFWorker;
 
+/**
+ * This class opens a window where the necessary inputs are entered for the operation of
+ * exporting a gif from a video file.
+ * 
+ * @author andrew
+ *
+ */
+
 public class GIFFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -41,15 +49,18 @@ public class GIFFrame extends JFrame {
 				_duration = duration.getText();
 				_outputName = outputName.getText();
 				
+				// make sure all the fields are entered
 				if (_startTime.isEmpty() || _duration.isEmpty() || _outputName.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please enter all the fields!");
 				} else {
 					File f = new File("./" + _outputName + ".gif");
+					//check if gif with the same name already exists
 					if (f.exists()) {
 						JOptionPane.showMessageDialog(null, "File name already exists, please enter another name.");
 					} else {
 						GIFWorker gifWorker = new GIFWorker(_startTime, _duration, _outputName, _fileName, _exportButton);
 						gifWorker.execute();
+						//disable the export button if the process is started.
 						_exportButton.setEnabled(false);
 					}
 				}
@@ -67,6 +78,7 @@ public class GIFFrame extends JFrame {
 	}
 	
 	protected void createAndShowGUI() {
+		//construction of GUI
 		setResizable(false);
 		setTitle("Export Gif");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
