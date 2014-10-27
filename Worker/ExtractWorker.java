@@ -12,7 +12,7 @@ import javax.swing.SwingWorker;
  * ProcessBuilder classes. This class calls upon the avconv bash command in order to
  * extract audio from a video. 
  * 
- * @author Jenny Lee
+ * @author Andrew Jeong
  *
  */
 
