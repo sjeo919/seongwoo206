@@ -67,9 +67,11 @@ public class VamixWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(playFrame == null || playFrame.isVisible() == false){
 					JFileChooser chooseFile = new JFileChooser();
+					//filter the file types
 					FileNameExtensionFilter filter = new FileNameExtensionFilter("Audio & Video files", "mp4", "avi"
 							, "mp3", "mov", "aac", "mkv");
 					chooseFile.setFileFilter(filter);
+					
 					//set directory to be current directory
 					File dir = new File(System.getProperty("user.dir"));
 					chooseFile.setCurrentDirectory(dir);
