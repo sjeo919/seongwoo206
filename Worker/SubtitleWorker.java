@@ -8,6 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class carries out the bash commands for adding subtitle to a video file.
+ * 
+ * @author andrew
+ *
+ */
+
 public class SubtitleWorker extends SwingWorker<String, Integer> {
 
 	private String _vidName;
@@ -43,7 +50,6 @@ public class SubtitleWorker extends SwingWorker<String, Integer> {
 		String line = null;
 
 		while ((line = stdoutBuffered.readLine()) != null ) {
-			System.out.println(line);
 			if(line.equals("Complete")){
 				_success = true;
 			}else{
@@ -56,8 +62,10 @@ public class SubtitleWorker extends SwingWorker<String, Integer> {
 	
 	@Override
 	protected void done(){
+		//when the process is done, enable the add subtitle button
 		_exportButton.setEnabled(true);
 		if(_complete == 0){
+			//when successful
 			if(_success == true){
 				JOptionPane.showMessageDialog(null, "Video Exported!");
 			}
