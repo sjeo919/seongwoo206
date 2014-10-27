@@ -16,6 +16,14 @@ import javax.swing.JButton;
 
 import Worker.SubtitleWorker;
 
+/**
+ * This class opens up a window where necessary inputs are entered for the operation of
+ * merging subtitle to a video.
+ * 
+ * @author andrew
+ *
+ */
+
 public class AddSubtitle extends JFrame {
 
 	private JPanel contentPane;
@@ -37,6 +45,7 @@ public class AddSubtitle extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser chooseFile = new JFileChooser();
+				//limit the files only to certain video files
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Video files", "mp4", "avi"
 						, "mov", "aac", "mkv");
 				chooseFile.setFileFilter(filter);
@@ -82,9 +91,11 @@ public class AddSubtitle extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//when the start button is pressed, if all the fields are entered, start processing
 				if (_fNameField.getText()!="" && _subNameField.getText()!="" && _outNameField.getText()!="") {
 					SubtitleWorker subWorker = new SubtitleWorker(_fNameField.getText(), _subNameField.getText(), _outNameField.getText(), _start);
 					subWorker.execute();
+					//disable the start button when the process is started
 					_start.setEnabled(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "Please check your entries");
