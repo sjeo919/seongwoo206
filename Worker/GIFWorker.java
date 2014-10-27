@@ -8,6 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This worker class processes the bash command for exporting a gif file
+ * 
+ * @author andrew
+ *
+ */
+
 public class GIFWorker extends SwingWorker<String,Integer> {
 
 	private String _startTime;
@@ -20,6 +27,7 @@ public class GIFWorker extends SwingWorker<String,Integer> {
 	private ProcessBuilder _builder;
 	private JButton _exportButton;
 	
+	//constructor for this class
 	public GIFWorker(String startTime, String duration, String outputName, String fileName, JButton exportButton) {
 		_startTime = startTime;
 		_duration = duration;
@@ -58,9 +66,12 @@ public class GIFWorker extends SwingWorker<String,Integer> {
 
 	@Override
 	protected void done(){
+		//when the process is done, enable the export button.
 		_exportButton.setEnabled(true);
+		//when successful
 		if(_complete == 0){
 			JOptionPane.showMessageDialog(null, "GIF Exported!");
+			//when error is encountered
 		} else if(_complete > 0){
 			JOptionPane.showMessageDialog(null, "Error Encountered");
 		}

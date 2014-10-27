@@ -44,7 +44,6 @@ public class ExtractWorker extends SwingWorker<String, Integer> {
 		_time = time;
 		_length = length;
 		_newName = newName;
-//		_audio = audio;
 		//bash command for extracting files
 		Thread t = new Thread(new Runnable(){
 			public void run(){
