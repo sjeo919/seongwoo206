@@ -43,7 +43,8 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
  * such as fast forward, rewind, play, pause, and etc (general commands for media players)
  * It also contains a pane containing the media player component where the video is being played.
  * 
- * In the menu tab, we also provided overlay and replace options for the audio. 
+ * In the menu tab, we also provided overlay, replace options for the audio, add text, add subtitle,
+ * open full screen. 
  * 
  * @author Andrew Jeong
  *
@@ -382,6 +383,7 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 			
 		});
 		
+		//if Export Gif is clicked, open GIFFrame window
 		exportGIF.addActionListener(new ActionListener () {
 
 			@Override
@@ -392,12 +394,14 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 			
 		});
 		
+		//when opening another media when one is already being played
 		open.addActionListener(new ActionListener () {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
 				JFileChooser chooseFile = new JFileChooser();
+				//restrict the file types that can be viewed from the file chooser window
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Audio & Video files", "mp4", "avi"
 						, "mp3", "mov", "aac", "mkv");
 				chooseFile.setFileFilter(filter);
@@ -419,17 +423,20 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 						
 					}
 				}
+				//if a proper file is selected, stop the current media, play new media, then reset the subtitle menu
 				if (_dirPath != null) {
 					_mediaPlayer.getMediaPlayer().stop();
 					_mediaPlayer.getMediaPlayer().playMedia(_dirPath);
 					editSubtitle.removeAll();
 					setUpSubtitleMenu(subtitle, disableSub, addSubtitle);
+					//change the title
 					_frame.setTitle("VAMIX - " + _dirPath.substring(_dirPath.lastIndexOf("/") + 1));
 				}
 			}
 			
 		});
 		
+		//when addSubtitle menu is pressed, open AddSubtitle window
 		addSubtitle.addActionListener(new ActionListener() {
 
 			@Override
@@ -440,6 +447,7 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 			
 		});
 		
+		//the media repeats itself
 		_mediaPlayer.getMediaPlayer().setRepeat(true);
 		
 	}
@@ -513,11 +521,13 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 			}
 		} 
 		
+		//if either disable subtitle or subtitle tracks are selected
 		else if(e.getSource().toString().contains("Subtitle") || e.getSource().toString().contains("Disable")) {
-			
+			//if selected is a subtitle track, put on that subtitle track
 			if (e.getSource().toString().contains("Subtitle")) {
-				int spuVal = Integer.parseInt(e.getActionCommand().split(" ")[1]);
-				_mediaPlayer.getMediaPlayer().setSpu(spuVal + 1);
+				int trackNumber = Integer.parseInt(e.getActionCommand().split(" ")[1]);
+				_mediaPlayer.getMediaPlayer().setSpu(trackNumber + 1);
+				//if selected is Disable subtitle, remove the subtitle from the screen
 			}else if (e.getSource().toString().contains("Disable")){
 				_mediaPlayer.getMediaPlayer().setSpu(-1);
 			}
@@ -613,29 +623,30 @@ public class PlayFrame extends JFrame implements ChangeListener, ActionListener,
 		rw.execute();
 	}
 	
-	public void setSubtitleTrue(File subtitle) {
-		_mediaPlayer.getMediaPlayer().setSubTitleFile(subtitle);
-	}
-	
 	// method that sets up the menu bar for the subtitle actions
 	public void setUpSubtitleMenu(JMenu subtitle, JMenuItem disableSub, JMenuItem addSubtitle) {
+		//if there is at least one subtitle track
 		if (_mediaPlayer.getMediaPlayer().getSpuCount() != 0) {
-			
+			//enable Select subtitle menu and add subtitle tracks
 			subtitle.add(disableSub);
 			disableSub.addActionListener(this);
 			subtitle.setEnabled(true);
 			disableSub.setEnabled(true);
+			//save temporary JRadioButtonMenuItem variable
 			temp = (JRadioButtonMenuItem)disableSub;
 			disableSub.setSelected(true);
+			//disable the subtitle at default
 			_mediaPlayer.getMediaPlayer().setSpu(-1);
 			
+			//add menu item for each of the subtitle track
 			for(int i = 1; i<_mediaPlayer.getMediaPlayer().getSpuCount(); i++){
-				JRadioButtonMenuItem j = new JRadioButtonMenuItem( "Subtitle " + (i));
-				subtitle.add(j);
-				j.setActionCommand("Subtitle "+(i)); 
-				j.addActionListener(this);
+				JRadioButtonMenuItem track = new JRadioButtonMenuItem( "Subtitle " + (i));
+				subtitle.add(track);
+				track.setActionCommand("Subtitle "+(i)); 
+				track.addActionListener(this);
 			}
 			
+		//if there is no subtitle track, disable the select subtitle menu
 		} else if (_mediaPlayer.getMediaPlayer().getSpuCount() == 0) {
 			subtitle.setEnabled(false);
 			disableSub.setEnabled(false);
