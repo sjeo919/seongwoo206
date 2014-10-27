@@ -112,7 +112,7 @@ public class VamixWindow extends JFrame {
 					
 		});
 		
-		//when Quit button is clicked, terminate the program
+		//when Help button is clicked, open the ReadMe window
 		_readme.addActionListener(new ActionListener(){
 
 			@Override
