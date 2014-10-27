@@ -2,13 +2,9 @@ package Function;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,23 +14,18 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
+/**
+ * This class allows the user to open a full screen window of media player.
+ * 
+ * @author andrew
+ *
+ */
 
 public class FullScreen {
 
 	private long _time;
 	protected JPanel _panel;
 	private EmbeddedMediaPlayer _mp;
-
-	public static void main(final String mrl, final EmbeddedMediaPlayer _mediaPlayer) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				new FullScreen(mrl, _mediaPlayer);
-			}
-		});
-	}
 
 	public FullScreen(String mrl, EmbeddedMediaPlayer _mediaPlayer) {
 		
